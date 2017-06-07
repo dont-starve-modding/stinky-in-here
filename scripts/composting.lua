@@ -30,7 +30,7 @@ function AddCompostablesValues(names, tags, cancook)
 end
 
 
-local fruits = {"pomegranate", "dragonfruit", "cave_banana"}
+local fruits = {"pomegranate", "dragonfruit", "cave_banana", "watermelon"}
 AddCompostablesValues(fruits, {fruit=1}, true)
 
 AddCompostablesValues({"berries"}, {fruit=.5}, true)
@@ -38,7 +38,7 @@ AddCompostablesValues({"durian"}, {fruit=1, monster=1}, true)
 
 -- AddCompostablesValues({"honey", "honeycomb"}, {sweetener=1}, true)
 
-local veggies = {"carrot", "corn", "pumpkin", "eggplant", "cutlichen"}
+local veggies = {"carrot", "corn", "pumpkin", "eggplant", "cutlichen", "cactus_meat", "cactus_flower"}
 AddCompostablesValues(veggies, {veggie=1}, true)
 
 local mushrooms = {"red_cap", "green_cap", "blue_cap"}
@@ -69,7 +69,7 @@ AddCompostablesValues(veggie_meals, {veggie=1.5}, false)
 
 local meat_meals = {"baconeggs", "fishtacos", "fishsticks", "frogglebunwich", "honeyham", "honeynuggets", "kabobs", "meatballs", "bonestew", "monsterlasagna", 
 "perogies", "turkeydinner"}
-AddCompostablesValues(meat_meals, {misc=1.75}, false)
+AddCompostablesValues(meat_meals, {misc=1.00}, false)
 
 local smallcompost = {
 	name = "smallcompost",
@@ -110,7 +110,7 @@ local largecompost = {
 local enlightedcompost = {
 	name = "enlightedcompost",
 	test = function(composter, names, tags) 
-		return (tags.enlighted or 0 >= 4.0) 
+		return (tags.enlighted or 0 >= 3.0) 
 	end,
 	priority = 3,
 	weight = 3,
@@ -224,7 +224,7 @@ local function CalculateRecipe(composter, names)
 	while idx <= #candidates do
 		val = val - candidates[idx].weight
 		if val <= 0 then
-			return candidates[idx].amount, candidates[idx].composttime or 1, candidates[idx].fireflyspawn
+			return candidates[idx].amount, candidates[idx].composttime or 1, candidates[idx].fireflyspawn  -- or 1?
 		end
 
 		idx = idx+1
@@ -267,11 +267,11 @@ local function TestRecipes(composter, prefablist)
 
 end
 
-TestRecipes("compostpile", {"berries","berries","berries","berries", "berries"})
-TestRecipes("compostpile", {"carrot","carrot","carrot","carrot"})
-TestRecipes("compostpile", {"berries","berries","carrot","carrot"})
-TestRecipes("compostpile", {"berries","carrot","berries","berries"})
-TestRecipes("compostpile", {"butterflywings","butterflywings", "butterflywings", "petals", "petals"})
+TestRecipes("compostpile", {"berries","berries","berries","berries", "berries"}) 						-- small recipe
+TestRecipes("compostpile", {"carrot","carrot","carrot","carrot"})										-- medium recipe
+TestRecipes("compostpile", {"berries","berries","carrot","carrot"})										-- medium recipe
+TestRecipes("compostpile", {"berries","carrot","berries","berries"})									-- small recipe
+TestRecipes("compostpile", {"butterflywings","butterflywings", "butterflywings", "petals", "petals"}) 	-- enlighted recipe
 
 
 

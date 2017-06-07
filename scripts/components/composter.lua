@@ -81,7 +81,7 @@ function Composter:StartComposting(time)
 			
 			local composttime = TUNING.TOTAL_DAY_TIME*5
 			self.poopamount, composttime, self.spawnfireflies = composting.CalculateRecipe(self.inst.prefab, ings)
-			
+						
 			-- lower the composting time by given spoilage grade spoilage total average spoilage of 50% lowers compost time by 25% (avg 20% -> 40%)
 			-- maximum lowering-grade is 50% here
 			if(spoilage_n > 0) then
@@ -97,7 +97,7 @@ function Composter:StartComposting(time)
 			
 			-- if the compost pile is very fertile lower composttime by 10% again
 			if(self.fertilesoil) then
-				composttime = composttime * TUNING.COMPOSTPILE_FERTILE_SOIL_ADVANTAGE_PERCENT
+				composttime = composttime * (1.0-TUNING.COMPOSTPILE_FERTILE_SOIL_ADVANTAGE_PERCENT)
 			end
 			
 			--all together composttime lowering-grade is 55%
@@ -116,7 +116,9 @@ function Composter:StartComposting(time)
 			if time then
 				composttime = time
 			end
-			print("start", composttime)
+			print("receive", self.poopamount, "poop");
+			print("firefly spawn rate (%):", self.spawnfireflies);
+			print("composting time in days: ", composttime/TUNING.TOTAL_DAY_TIME);
 			self:StartTask(composttime)
 
 			self.inst.components.container:Close()
